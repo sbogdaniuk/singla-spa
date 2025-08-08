@@ -1,0 +1,14 @@
+.pmn-navbar {
+  width: 250px;
+  border: 5px solid transparent;
+}
+
+.pmn-nav-link {
+}
+
+.pmn-unselected {
+}
+
+.pmn-selected {
+  outline: 1px solid red;
+}

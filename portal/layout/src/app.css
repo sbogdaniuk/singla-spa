@@ -1,0 +1,34 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.root-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.topnav {
+  flex: 0 0 auto;
+}
+.main-content {
+  flex: 1 1 auto;
+}
+
+[id^="single-spa-application"] {
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  border: 3px solid lightgreen;
+  width: 100%;
+  height: 100%;
+}
+
+.none {
+  display: none;
+}

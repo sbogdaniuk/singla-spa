@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Root Config</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';"
+    />
+    <meta name="importmap-type" use-injector />
+
+    <style>
+      /* 1. Use a more-intuitive box-sizing model */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      /* 2. Remove default margin */
+      * {
+        margin: 0;
+      }
+
+      /* 3. Enable keyword animations */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          interpolate-size: allow-keywords;
+        }
+      }
+
+      body {
+        /* 4. Add accessible line-height */
+        line-height: 1.5;
+        /* 5. Improve text rendering */
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* 6. Improve media defaults */
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* 7. Inherit fonts for form controls */
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      /* 8. Avoid text overflows */
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+
+      /* 9. Improve line wrapping */
+      p {
+        text-wrap: pretty;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-wrap: balance;
+      }
+
+      /* 10. Create a root stacking context */
+      #root,
+      #__next {
+        isolation: isolate;
+      }
+    </style>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.1/dist/system.min.js"></script> -->
+
+    <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
+    <!-- More info at https://github.com/single-spa/import-map-overrides/blob/main/docs/configuration.md#domain-list -->
+    <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
+
+    <!-- Shared dependencies go into this import map -->
+
+    <script type="injector-importmap">
+      {
+        "imports": {
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js",
+          "path-to-regexp": "https://cdn.jsdelivr.net/npm/path-to-regexp@6.3.0/dist/index.min.js"
+        }
+      }
+    </script>
+
+    <% if (isLocal) { %>
+    <!-- Development Import Map -->
+    <script type="injector-importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.0.0?dev",
+          "react-dom": "https://esm.sh/react-dom@19.0.0?dev",
+          "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?dev"
+        }
+      }
+    </script>
+    <% } %>
+
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js"
+      as="module"
+    />
+
+    <!-- Add your organization's prod import map URL to this script's src  -->
+    <!-- <script type="injector-importmap" src="/importmap.json"></script> -->
+
+    <% if (isLocal) { %>
+    <script type="injector-importmap" id="local-overrides">
+      {
+        "imports": {
+          "@portal/layout": "//localhost:9000/portal-layout.js",
+          "@portal/header": "//localhost:9001/portal-header.js",
+          "@product-manage/layout": "//localhost:8000/product-manage-layout.js",
+          "@products/search": "//localhost:6001/products-search.js",
+          "@papp/product-manage": "//localhost:5001/papp-product-manage.js",
+          "@costing/bol": "http://localhost:7001/costing-bol.js",
+          "@costing/list": "http://localhost:7002/costing-list.js",
+          "@legacy/angularjs": "http://localhost:1001/legacy-angularjs.js"
+        }
+      }
+    </script>
+    <% } %>
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@single-spa/import-map-injector@2.0.1/lib/import-map-injector.js"></script>
+
+    <style>
+      .inline-spinner {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: inline-spin 0.6s linear infinite;
+        vertical-align: middle;
+      }
+
+      @keyframes inline-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+
+    <span
+      id="root-loader"
+      class="inline-spinner none"
+      aria-label="Loading..."
+    ></span>
+
+    <div id="root-layout" class="root-layout">
+      <nav class="topnav">
+        <div id="single-spa:portal-header"></div>
+      </nav>
+      <div id="main-content"></div>
+    </div>
+
+    <!-- <template id="single-spa-layout">
+      <single-spa-router>
+        <div class="root-layout">
+          <nav class="topnav">
+            <application name="@portal/header"></application>
+          </nav>
+          <div class="main-content">
+            <route path="/" exact>
+              <h1>Home Page</h1>
+              <div>This is static content</div>
+            </route>
+            <route path="/product/:season?/:model?">
+              <application name="@papp/product-manage"></application>
+            </route>
+            <route path="/products">
+              <application name="@products/search"></application>
+            </route>
+            <route path="/legacy" exact>
+              <application name="@legacy/angularjs"></application>
+            </route>
+          </div>
+        </div>
+      </single-spa-router>
+    </template> -->
+
+    <script>
+      window.importMapInjector.initPromise.then(() => {
+        import("@portal/layout");
+        import("@portal/header");
+      });
+    </script>
+    <import-map-overrides-full
+      show-when-local-storage="devtools"
+      dev-libs
+    ></import-map-overrides-full>
+  </body>
+</html>

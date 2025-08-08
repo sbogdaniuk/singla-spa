@@ -1,0 +1,11 @@
+.ppm-base {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.ppm-mavbar {
+  flex: 0 0 auto;
+}
+.ppm-content {
+  flex: 1 1 auto;
+}
