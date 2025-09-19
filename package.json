@@ -1,0 +1,26 @@
+{
+  "name": "single-spa-example",
+  "scripts": {
+    "setup": "npm i && run-s setup:**",
+    "setup:portal:header": "cd portal/header && npm i",
+    "setup:portal:layout": "cd portal/layout && npm i",
+    "setup:products:search": "cd products/search && npm i",
+    "setup:product-manage": "cd product-manage && npm i --legacy-peer-deps",
+    "setup:costing:bol": "cd costing/bol && npm i",
+    "setup:costing:list": "cd costing/list && npm i",
+    "setup:legacy:angularjs": "cd legacy/angularjs && npm i",
+    "start": "npm-run-all --parallel 'start:portal:header' 'start:portal:layout' 'start:products:search' 'start:product-manage' 'start:costing:bol' 'start:costing:list' 'start:legacy:angularjs'",
+    "start:portal:header": "cd portal/header && npm start",
+    "start:portal:layout": "cd portal/layout && npm start",
+    "start:products:search": "cd products/search && npm start",
+    "start:product-manage": "cd product-manage && npm start",
+    "start:costing:bol": "cd costing/bol && npm start",
+    "start:costing:list": "cd costing/list && npm start",
+    "start:legacy:angularjs": "cd legacy/angularjs && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "npm-run-all2": "5.0.2",
+    "rimraf": "3.0.2"
+  }
+}
